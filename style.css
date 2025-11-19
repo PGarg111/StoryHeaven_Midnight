@@ -107,7 +107,6 @@ body {
     gap: 1rem;
     align-items: flex-start;
     flex-wrap: wrap;
-    transform: rotate(0.28deg);
 }
 
 .toc a {
