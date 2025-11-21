@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+
 :root {
     --max-width: 900px;
     --type-size: 18px;
@@ -5,11 +7,15 @@
     --bg: #fff;
     --fg: #111;
     --muted: #555;
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-weight: 500;
+    font-style: normal;
 }
 
 
 
-body.dark-mode{
+body.dark-mode {
     --bg: #111111;
     --fg: #e6e6e6;
     --muted: #555;
@@ -189,23 +195,33 @@ a:focus,
     top: 0;
     left: 0;
     width: 100%;
-    background-color: #397e9c;
+    background-color: none;
     display: flex;
     justify-content: center;
     z-index: 1000;
     align-items: center;
     transition: transform .15s ease, box-shadow .15s ease;
+    transition:
+        transform 0.3s cubic-bezier(.25, .46, .45, .94),
+        box-shadow 0.3s cubic-bezier(.25, .46, .45, .94);
 }
 
 .topbar a {
-    color: white;
+    color: rgb(0, 0, 0);
     text-decoration: none;
     padding: 14px 20px;
     font-size: 14px;
 }
 
+.topbar:hover{
+    transform: scale(1.05);
+    box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.414);
+}
+
 .topbar a:hover {
-    background-color: #bbb8b8;
+    background-color: #a2bdc7ab;
+    border-radius: 5px;
+    
 }
 
 table img {
@@ -217,7 +233,7 @@ table img {
     object-fit: cover;
     border-radius: 8px;
     display: block;
-    border:2px solid black;
+    border: 2px solid black;
 }
 
 .picture-2 {
@@ -232,23 +248,23 @@ table img {
 }
 
 td {
-  vertical-align: top;   /* keeps captions aligned at the top */
-  height: 320px;         /* set a fixed height for all cells */
-  width: 200px;          /* optional: keeps cells uniform width */
-  text-align: center;    /* center content inside */
+    vertical-align: top;
+    height: 320px;
+    width: 200px;
+    text-align: center;
 }
 
 td img {
-  height: 300px;         /* same height for all images */
-  width: auto;           /* keep proportions */
-  display: block;
-  margin: 0 auto;
+    height: 300px;
+    width: auto;
+    display: block;
+    margin: 0 auto;
 }
 
 table {
-  width: 100%;              /* make table take full width */
-  table-layout: fixed;      /* evenly distribute columns */
-  border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
 }
 
 
@@ -288,22 +304,22 @@ h1 {
 }
 
 
-.footer-right{
+.footer-right {
     border-radius: 4px;
 
 }
 
 button {
-    border-radius: 5px; 
+    border-radius: 5px;
     background-color: white;
     border-color: white;
-    transition: 
+    transition:
         transform 0.3s cubic-bezier(.25, .46, .45, .94),
         box-shadow 0.3s cubic-bezier(.25, .46, .45, .94);
 
 }
 
-button:hover{
-    transform: scale(1.05);   
+button:hover {
+    transform: scale(1.05);
     box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.414);
 }
