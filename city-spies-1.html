@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>City Spies</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="Book-icon-bible-removebg-preview.png" type="image/jpg">
+
+    <style>
+        body {
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+            margin: 0;
+            padding: 20px;
+        }
+
+        #toc button {
+            display: block;
+            margin: 4px 0;
+            padding: 6px;
+        }
+
+        .chapter {
+            display: none;
+            margin-top: 20px;
+        }
+
+        .chapter.active {
+            display: block;
+        }
+    </style>
+</head>
+
+<body class="book-page" id="top">
+
+    <body class="reader-page dark-mode">
+        <header class="reader-header">
+            <a class="back" href="index.html">← Library</a>
+            <h1 id="book-title"></h1>
+
+            <div>
+                <button id="play-btn">Play Music</button>
+                <button id="pause-btn">Pause Music</button>
+
+                <audio id="bg-music"
+                    src="30 Minutes of Beautiful Romantic Music_ Guitar Music, Violin Music, Cello Music, Piano Music ★74 [wqHHRcuJ3OU].mp3"
+                    loop style="display: none;">
+                </audio>
+
+                <script>
+                    const music = document.getElementById('bg-music');
+                    const playBtn = document.getElementById('play-btn');
+                    const pauseBtn = document.getElementById('pause-btn');
+
+                    music.volume = 0.5;
+
+                    playBtn.addEventListener('click', () => {
+                        music.play();
+                    });
+
+                    pauseBtn.addEventListener('click', () => {
+                        music.pause();
+                    });
+                    let size = 18;
+                    function resizeText(change) {
+                        size += change;
+                        document.documentElement.style.setProperty('--type-size', size + 'px');
+                    }
+
+                    function toggleTheme() {
+                        document.body.classList.toggle('dark-mode');
+                    }
+                    
+                </script>
+            </div>
+
+            <div>
+                <button onclick="toggleTheme()">🌓</button>
+
+            </div>
+            <div>
+                <button onclick="resizeText(-2)">A-</button>
+                <button onclick="resizeText(2)">A+</button>
+            </div>
+
+        </header>
+        <nav id="toc" class="toc"></nav>
+
+
+    </body>
+
+
+
+    <main id="content" class="book"></main>
+    <div id="nav-buttons" style="margin-top: 20px; display: none;">
+        <button id="prev-btn">Previous</button>
+        <button id="next-btn">Next</button>
+    </div>
+
+    <script>
+        async function loadBook() {
+            const response = await fetch('city-spies.json');
+            const book = await response.json();
+
+            document.getElementById('book-title').textContent = book.title;
+
+            const toc = document.getElementById('toc');
+            const content = document.getElementById('content');
+
+            book.sections.forEach(sec => {
+                sectionOrder.push(sec.id);
+
+                const btn = document.createElement('button');
+                btn.textContent = sec.id;
+                btn.onclick = () => showSection(sec.id);
+                toc.appendChild(btn);
+
+                const div = document.createElement('div');
+                div.id = sec.id;
+                div.className = 'chapter';
+
+                sec.content.forEach(p => {
+                    const el = document.createElement('p');
+                    el.textContent = p;
+                    div.appendChild(el);
+                });
+
+                content.appendChild(div);
+            });
+
+
+            showSection(sectionOrder[0]);
+
+            document.getElementById("nav-buttons").style.display = "block";
+        }
+
+        const sectionOrder = [];   
+        let currentIndex = 0; 
+
+        function showSection(id) {
+            
+            document.querySelectorAll('.chapter').forEach(c => c.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+
+            currentIndex = sectionOrder.indexOf(id);
+
+            updateButtons();
+            window.scrollTo({ top: 0, behavior: "auto" });
+        }
+
+        function updateButtons() {
+            document.getElementById("prev-btn").disabled = currentIndex === 0;
+            document.getElementById("next-btn").disabled = currentIndex === sectionOrder.length - 1;
+        }
+
+        loadBook();
+
+        document.getElementById("next-btn").onclick = () => {
+            if (currentIndex < sectionOrder.length - 1) {
+                currentIndex++;
+                showSection(sectionOrder[currentIndex]);
+            }
+        };
+
+        document.getElementById("prev-btn").onclick = () => {
+            if (currentIndex > 0) {
+                currentIndex--;
+                showSection(sectionOrder[currentIndex]);
+            }
+        };
+
+        
+
+    </script>
+</body>
+
+</html>
